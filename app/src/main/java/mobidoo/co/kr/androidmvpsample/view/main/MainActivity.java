@@ -1,4 +1,4 @@
-package mobidoo.co.kr.androidmvpsample;
+package mobidoo.co.kr.androidmvpsample.view.main;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,16 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import java.util.ArrayList;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mobidoo.co.kr.androidmvpsample.R;
 import mobidoo.co.kr.androidmvpsample.adapter.ImageAdapter;
-import mobidoo.co.kr.androidmvpsample.data.ImageItem;
-import mobidoo.co.kr.androidmvpsample.data.SampleImageData;
-import mobidoo.co.kr.androidmvpsample.presenter.MainContract;
-import mobidoo.co.kr.androidmvpsample.presenter.MainPresenter;
+import mobidoo.co.kr.androidmvpsample.data.source.image.SampleImageRepository;
+import mobidoo.co.kr.androidmvpsample.view.main.presenter.MainContract;
+import mobidoo.co.kr.androidmvpsample.view.main.presenter.MainPresenter;
+
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     @BindView(R.id.recycler_view)
@@ -34,18 +34,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        imageAdapter = new ImageAdapter(this);
+        recyclerView.setAdapter(imageAdapter);
+
         mainPresenter = new MainPresenter();
         mainPresenter.attachView(this);
-        mainPresenter.setSampleImageData(SampleImageData.getInstance());
+        mainPresenter.setSampleImageData(SampleImageRepository.getInstance());
+        mainPresenter.setImageAdapterModel(imageAdapter);
+        mainPresenter.setImageAdapterView(imageAdapter);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        imageAdapter = new ImageAdapter(this);
-        recyclerView.setAdapter(imageAdapter);
-
         mainPresenter.loadItems(this,false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -88,15 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void addItems(ArrayList<ImageItem> items, boolean isClear) {
-        if(isClear){
-            imageAdapter.clear();
-        }
-        imageAdapter.setImageItems(items);
-    }
-
-    @Override
-    public void notifyAdapter() {
-        imageAdapter.notifyDataSetChanged();
+    public void showToast(String title) {
+        Toast.makeText(this,title,Toast.LENGTH_SHORT).show();
     }
 }

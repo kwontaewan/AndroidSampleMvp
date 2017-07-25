@@ -1,28 +1,19 @@
-package mobidoo.co.kr.androidmvpsample.data;
+package mobidoo.co.kr.androidmvpsample.data.source.image;
 
 import android.content.Context;
 
 import java.util.ArrayList;
 
+import mobidoo.co.kr.androidmvpsample.data.ImageItem;
+
 /**
  * Created by xc200 on 2017-07-14.
  */
 
-public class SampleImageData {
+public class SampleImageLocalDataSource implements SampleImageSource{
 
-    private SampleImageData() {
-    }
-
-    private static SampleImageData sampleImageData;
-
-    public static SampleImageData getInstance(){
-        if(sampleImageData == null){
-            sampleImageData = new SampleImageData();
-        }
-        return sampleImageData;
-    }
-
-    public ArrayList<ImageItem> getImages(Context context,int size){
+    @Override
+    public void getImages(Context context, int size, LoadImageCallBack loadImageCallBack) {
         ArrayList<ImageItem> items = new ArrayList<>();
 
         for(int i = 0 ; i < size ; i++){
@@ -32,6 +23,6 @@ public class SampleImageData {
             items.add(new ImageItem(resource, name));
         }
 
-        return items;
+        if(loadImageCallBack !=null )loadImageCallBack.onImageLoaded(items);
     }
 }
