@@ -12,11 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobidoo.co.kr.androidmvpsample.R;
 import mobidoo.co.kr.androidmvpsample.adapter.ImageAdapter;
-import mobidoo.co.kr.androidmvpsample.data.source.image.SampleImageRepository;
+import mobidoo.co.kr.androidmvpsample.view.main.di.DaggerMainActivityComponent;
+import mobidoo.co.kr.androidmvpsample.view.main.di.MainActivityModule;
 import mobidoo.co.kr.androidmvpsample.view.main.presenter.MainContract;
 import mobidoo.co.kr.androidmvpsample.view.main.presenter.MainPresenter;
 
@@ -25,28 +28,38 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private ImageAdapter imageAdapter;
-    private MainPresenter mainPresenter;
+    @Inject
+    ImageAdapter imageAdapter;
+
+    @Inject
+    MainPresenter mainPresenter;
+
+    @Inject
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this,this)).build().inject(this);
 
-        imageAdapter = new ImageAdapter(this);
+        //imageAdapter = new ImageAdapter(this);
         recyclerView.setAdapter(imageAdapter);
 
-        mainPresenter = new MainPresenter();
-        mainPresenter.attachView(this);
-        mainPresenter.setSampleImageData(SampleImageRepository.getInstance());
+        //mainPresenter = new MainPresenter();
+        //mainPresenter.attachView(this);
+
+
+        //mainPresenter.setSampleImageData(SampleImageRepository.getInstance());
         mainPresenter.setImageAdapterModel(imageAdapter);
         mainPresenter.setImageAdapterView(imageAdapter);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
         mainPresenter.loadItems(this,false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

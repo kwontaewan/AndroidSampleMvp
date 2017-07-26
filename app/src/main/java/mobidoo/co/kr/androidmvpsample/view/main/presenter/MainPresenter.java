@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import mobidoo.co.kr.androidmvpsample.adapter.OnItemClickListener;
 import mobidoo.co.kr.androidmvpsample.adapter.contract.ImageAdapterContract;
 import mobidoo.co.kr.androidmvpsample.data.ImageItem;
@@ -23,8 +25,8 @@ public class MainPresenter implements MainContract.Presenter, OnItemClickListene
 
     private SampleImageRepository sampleImageData;
 
-    @Override
-    public void attachView(MainContract.View view) {
+    @Inject
+    public MainPresenter(MainContract.View view) {
         this.view = view;
     }
 
@@ -34,6 +36,7 @@ public class MainPresenter implements MainContract.Presenter, OnItemClickListene
     }
 
     @Override
+    @Inject
     public void setSampleImageData(SampleImageRepository sampleImageData) {
         this.sampleImageData = sampleImageData;
     }

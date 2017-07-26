@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import mobidoo.co.kr.androidmvpsample.data.ImageItem;
 
 /**
@@ -11,7 +13,7 @@ import mobidoo.co.kr.androidmvpsample.data.ImageItem;
  */
 
 public class SampleImageRepository implements SampleImageSource {
-    private static SampleImageRepository sampleImageRepository;
+/*    private static SampleImageRepository sampleImageRepository;
 
     public static SampleImageRepository getInstance(){
         if(sampleImageRepository == null){
@@ -19,12 +21,15 @@ public class SampleImageRepository implements SampleImageSource {
         }
 
         return sampleImageRepository;
-    }
+    }*/
 
     private SampleImageLocalDataSource sampleImageLocalDataSource;
 
-    private SampleImageRepository(){
-        sampleImageLocalDataSource = new SampleImageLocalDataSource();
+
+    //생성자에 Inject를 선언하여 SampleImageLocalDataSource를 주입할려고하면 빌드할떄 SampleImageRepository가 저정로 인스턴스화됨
+    @Inject
+    public SampleImageRepository(SampleImageLocalDataSource sampleImageLocalDataSource){
+        this.sampleImageLocalDataSource = sampleImageLocalDataSource;
     }
 
     @Override

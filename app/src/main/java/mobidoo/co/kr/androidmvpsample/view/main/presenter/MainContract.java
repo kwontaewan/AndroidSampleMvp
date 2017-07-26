@@ -17,7 +17,7 @@ public interface MainContract {
 
     interface Presenter {
 
-        void attachView(View view);
+        //void attachView(View view);
 
         void detachView();
 
