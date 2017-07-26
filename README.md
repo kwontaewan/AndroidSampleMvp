@@ -1,9 +1,15 @@
-"# AndroidSampleMvp" 
+# AndroidSampleMvp
+An android MVP structure APP with Dagger2
 
+# References
+- https://github.com/taehwandev/AndroidMVPSample
+- https://github.com/fisache/WatchGithub
+- https://github.com/LadwaAditya/DaggerMVP-Tutorial
 
-<b>to-do</b>
----------------------------------------------------------
-dagger2 붙이고...
-rx 붙이고..
+# Dependencies
+<a href="https://github.com/google/dagger">Dagger2</a> <br />
+<a href="https://github.com/JakeWharton/butterknife">butterknife</a> <br />
+<a href="https://github.com/bumptech/glide">glide</a> <br />
 
-테스트코드도 작성해봐야지...
+# Articles
+
