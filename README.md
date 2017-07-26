@@ -13,3 +13,6 @@ An android MVP structure APP with Dagger2
 
 # Articles
 
+# To-do
+- Add Retrofit, RxJava , RxAndroid, RxBinding
+
